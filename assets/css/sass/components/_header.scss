@@ -1,0 +1,17 @@
+header {
+    background-color: #fff;
+    overflow: hidden;
+    @include media-query(tablet-and-desktop) {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 999;
+    }
+}
+
+.logo {
+    float: left;
+    margin: 30px;
+    cursor: pointer;
+}

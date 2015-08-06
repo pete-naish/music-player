@@ -2,8 +2,46 @@
 <html>
     <head>
         <title>Office Music Player</title>
+        <link rel="stylesheet" href="assets/css/app.css">
     </head>
     <body>
-        
+        <button class="button--reset-style js-connect"><img src="assets/img/min/btn-connect-l.png" alt=""></button>
+        <section class="search">
+            <img class="brand-logo" src="logo.png" alt="">
+            <form class="search-form" action="#">
+                <input class="search-form__input js-search-input" type="search">
+                <ul class="search-results js-search-result-list">
+                    
+                </ul>
+            </form>
+        </section>
+        <section class="playlist">
+            <h1>The playlist</h1>
+            <table>
+                <thead>
+                    <tr>
+                        <td>SONG</td>
+                        <td>ARTIST</td>
+                        <td>ALBUM</td>
+                        <td>LENGTH</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Workout</td>
+                        <td>Andy C</td>
+                        <td>Heartbeat Loud</td>
+                        <td>3:00</td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul>
+                <li>CURRENT SONG TITLE - ARTIST || > >|</li>
+                <li>Song title - Artist (delete) (drag to move up or down)</li>
+            </ul>
+        </section>
+        <script src="assets/js/sizzle.min.js"></script>
+        <script src="//connect.soundcloud.com/sdk-2.0.0.js"></script>
+        <script src="assets/js/app.js"></script>
     </body>
 </html>

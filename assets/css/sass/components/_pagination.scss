@@ -1,0 +1,14 @@
+.pagination {
+    text-align: center;
+    padding: 50px 0;
+    color: lighten($color--copy, 40%);
+    background-color: #fff;
+}
+
+.pagination__previous {
+    margin-right: 10px;
+}
+
+.pagination__next {
+    margin-left: 10px;
+}

@@ -1,0 +1,42 @@
+// Inline media queries
+// @include breakpoint(tablet-and-desktop){}
+
+@mixin media-query($breakpoint) {
+
+    @if $breakpoint == 800 {
+        @media all and (min-width: em(800px)) { @content; }   
+    }
+
+    @if $breakpoint == 450 {
+        @media all and (min-width: em(450px)) { @content; }   
+    }
+
+    @if $breakpoint == 550 {
+        @media all and (min-width: em(550px)) { @content; }   
+    }
+
+    @if $breakpoint == 1200 {
+        @media all and (min-width: em(1200px)) { @content; }   
+    }
+
+    @if $breakpoint == mobile {
+        @media all and (min-width: em(480px)) { @content; }   
+    }    
+
+    @if $breakpoint == tablet {
+     @media all and (min-width: em(768px)) and (max-width: em(1024px)) { @content; }
+    }
+
+    @else if $breakpoint == tablet-and-desktop {
+     @media all and (min-width: em(768px)) { @content; }
+    }
+
+    @else if $breakpoint == desktop {
+     @media all and (min-width: em(1025px)) { @content; }    
+    }
+
+    @else if $breakpoint == widescreen {
+     @media all and (min-width: em(1525px)) { @content; }    
+    }
+
+}

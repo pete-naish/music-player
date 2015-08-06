@@ -8,8 +8,6 @@ module.exports = function (grunt) {
 
     grunt.initConfig({
 
-        domain: 'local.office-music-player.co.uk',
-
         pkg: grunt.file.readJSON('package.json'),
 
         // compress images
@@ -26,8 +24,8 @@ module.exports = function (grunt) {
               cwd: 'assets/img/src/',
               src: ['*.{png,jpg,gif}'],
               dest: 'assets/img/min/'
-            }
-          }],
+            }]
+          },
         },
 
         // browser sync - maps your local site to an ip address that you can visit with other devices on the same network
@@ -35,7 +33,7 @@ module.exports = function (grunt) {
         browserSync: {
             dev: {
                 options: {
-                  proxy: <%= domain %>
+                  proxy: 'local.office-music-player.co.uk'
                 }
             }
         },
@@ -105,7 +103,7 @@ module.exports = function (grunt) {
     });
 
   // Uncomment this to turn tests on
-  grunt.registerTask('default', ['connect', 'concurrent:first', 'concurrent:second', 'watch']);
+  grunt.registerTask('default', ['concurrent:first', 'concurrent:second', 'watch']);
 
   grunt.registerTask('sync', ['browserSync']);
  
