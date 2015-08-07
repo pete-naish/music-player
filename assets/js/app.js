@@ -9,7 +9,8 @@ var PLAYLIST_ID = 132348750,
 var tracks = [],
     player,
     playlist,
-    currentTrack;
+    currentTrack,
+    playlistAPI;
 
 saatchiMusic.init = function() {
     var connectButton = document.querySelector('.js-connect');
@@ -23,9 +24,7 @@ saatchiMusic.init = function() {
         SC.initialize({
             client_id: 'a7d2d4f9bbd96add03c6b873e39abbf3',
             redirect_uri: 'http://local.office-music-player.co.uk/callback.html'
-        });
-
-        SC.connect(function(){
+        }).connect(function(){
             saatchiMusic.search();
             playlist.getPlaylist();
         });
@@ -45,10 +44,10 @@ saatchiMusic.search = function() {
 
     searchInput.addEventListener('keyup', function() {
         clearTimeout(timer);
-        timer = this.value.length ? setTimeout(soundCloudSearch, 250) : null;
+        timer = this.value.length ? setTimeout(soundcloudSearch, 250) : null;
     });
 
-    function soundCloudSearch() {
+    function soundcloudSearch() {
         var searchTerm = searchInput.value;
 
         SC.get('/tracks', {
@@ -58,39 +57,51 @@ saatchiMusic.search = function() {
                 to: 600000
             }
         }, function(tracks) {
-            saatchiMusic.listSearchResults(tracks);
+            renderSearchResults(tracks);
         });
     }
-}
 
-saatchiMusic.listSearchResults = function(results) {
-    var searchResultList = document.querySelector('.js-search-result-list');
+    function renderSearchResults(results) {
+        var searchResultList = document.querySelector('.js-search-result-list');
 
-    while (searchResultList.firstChild) {
-        searchResultList.removeChild(searchResultList.firstChild);
-    }
+        while (searchResultList.firstChild) {
+            searchResultList.removeChild(searchResultList.firstChild);
+        }
 
-    results.map(function(result) {
-        var listItem = document.createElement('li'),
-            listItemLink = document.createElement('a'),
-            listItemText = document.createTextNode(result.title);
+        results.map(function(result) {
+            var listItem = document.createElement('li'),
+                listItemLink = document.createElement('a'),
+                listItemText = document.createTextNode(result.title);
 
-        listItemLink.appendChild(listItemText); 
-        listItem.appendChild(listItemLink); 
+            listItemLink.appendChild(listItemText); 
+            listItem.appendChild(listItemLink); 
 
-        listItem.addEventListener('click', function(){
-            listItem.className = "current-track";
-            saatchiMusic.playTrack(result);
+            listItem.addEventListener('click', function(){
+                playlist.addTrack(result);
+                // listItem.className = "current-track";
+                // saatchiMusic.playTrack(result);
+            });
+
+            searchResultList.appendChild(listItem);
         });
-
-        searchResultList.appendChild(listItem);
-    });
+    }
 }
 
 saatchiMusic.playlist = function() {
 
     function addTrack(track) {
-        playlist.push(track);
+        tracks.push(track);
+        SC.post('/playlists/' + PLAYLIST_ID, { playlist: { tracks: [track.id] }, function(response) {
+            console.log(response);
+        }});
+
+          // SC.get('/me/playlists', { limit: 1 }, function(playlist) {
+          //   SC.put(playlist.uri, { playlist: { tracks: [track.id] }, function(response)  {
+          //       console.log(response);
+          //   }});
+          // });
+       
+        getPlaylist();
     }
 
     function removeTrack() {
@@ -105,6 +116,7 @@ saatchiMusic.playlist = function() {
 
     function getPlaylist() {
         SC.get('/playlists/'+ PLAYLIST_ID, function(playlist) {
+            playlistAPI = playlist;
             tracks = playlist.tracks;
             renderPlaylist();
             player.play(tracks[0]);
@@ -112,9 +124,14 @@ saatchiMusic.playlist = function() {
     }
 
     function renderPlaylist() {
+        var playlistTracks = document.querySelector('.js-tracklist');
+
+        while (playlistTracks.firstChild) {
+            playlistTracks.removeChild(playlistTracks.firstChild);
+        }
+
         tracks.map(function(track) {
-            var playlistTracks = document.querySelector('.js-tracklist'),
-                playlistItem = document.createElement('tr'),
+            var playlistItem = document.createElement('tr'),
                 playlistItemTitle = document.createElement('td'),
                 playlistItemTitleText = document.createTextNode(track.title),
                 playlistItemTime = document.createElement('td'),
