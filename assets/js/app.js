@@ -91,15 +91,7 @@ saatchiMusic.playlist = function() {
 
     function addTrack(track) {
         tracks.push(track);
-        SC.post('/playlists/' + PLAYLIST_ID, { playlist: { tracks: [track.id] }, function(response) {
-            console.log(response);
-        }});
-
-          // SC.get('/me/playlists', { limit: 1 }, function(playlist) {
-          //   SC.put(playlist.uri, { playlist: { tracks: [track.id] }, function(response)  {
-          //       console.log(response);
-          //   }});
-          // });
+        SC.put('/playlists/' + PLAYLIST_ID, { playlist: { tracks: [track.id] }});
        
         getPlaylist();
     }
