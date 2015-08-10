@@ -1,0 +1,22 @@
+[
+    {
+        "author": "Mike Hunt",
+        "text": "This is one comment",
+        "id": "1"
+    },
+    {
+        "author": "Jill Doe",
+        "text": "This is *another* comment",
+        "id": "2"
+    },
+    {
+        "author": "Pete",
+        "text": "Comment!",
+        "id": "3"
+    },
+    {
+        "author": "What!",
+        "text": "Hello",
+        "id": "4"
+    }
+]

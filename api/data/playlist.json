@@ -1,0 +1,22 @@
+{
+    "id": "1",
+    "name": "playlist",
+    "tracks": [
+        {
+            "track_id": "Mike Hunt",
+            "title": "This is one comment",
+            "duration": "6000",
+            "image": "http://google.co.uk",
+            "added_by": "2",
+            "id": "1"
+        },
+        {
+            "track_id": "Mike Hunt",
+            "title": "This is one comment",
+            "duration": "6000",
+            "image": "http://google.co.uk",
+            "added_by": "2",
+            "id": "1"
+        }
+    ]
+}

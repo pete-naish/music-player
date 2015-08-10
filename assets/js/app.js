@@ -78,8 +78,6 @@ saatchiMusic.search = function() {
 
             listItem.addEventListener('click', function(){
                 playlist.addTrack(result);
-                // listItem.className = "current-track";
-                // saatchiMusic.playTrack(result);
             });
 
             searchResultList.appendChild(listItem);
@@ -88,11 +86,8 @@ saatchiMusic.search = function() {
 }
 
 saatchiMusic.playlist = function() {
-
     function addTrack(track) {
         tracks.push(track);
-        SC.put('/playlists/' + PLAYLIST_ID, { playlist: { tracks: [track.id] }});
-       
         getPlaylist();
     }
 
@@ -107,12 +102,17 @@ saatchiMusic.playlist = function() {
     }
 
     function getPlaylist() {
-        SC.get('/playlists/'+ PLAYLIST_ID, function(playlist) {
-            playlistAPI = playlist;
-            tracks = playlist.tracks;
-            renderPlaylist();
-            player.play(tracks[0]);
-        });
+        var httpRequest = new XMLHttpRequest();
+
+        httpRequest.onload = logContents;
+        httpRequest.open('GET', '/playlist');
+        httpRequest.send();
+
+        function logContents() {
+            if (httpRequest.status === 200) {
+                console.log(JSON.parse(httpRequest.response));
+            }
+        }
     }
 
     function renderPlaylist() {
@@ -152,7 +152,6 @@ saatchiMusic.playlist = function() {
 }
 
 saatchiMusic.player = function() {
-
     function play(track) {
         SC.stream('/tracks/' + track.id, function(sound) {
             currentTrack = sound;
@@ -169,7 +168,7 @@ saatchiMusic.player = function() {
         if (!tracks.length) {
             return false;
         }
-
+        
         play(tracks[0]);
     }
 
@@ -179,5 +178,4 @@ saatchiMusic.player = function() {
 }
 
 saatchiMusic.init();
-
 })();
