@@ -2,40 +2,20 @@
     "main": {
         "id": "1",
         "name": "main",
-        "tracks": []
+        "tracks": [
+            {
+                "title": "What?",
+                "duration": 9326,
+                "artwork_url": null,
+                "id": 140718791,
+                "added_by": 166910789
+            }
+        ]
     },
     "recent": {
         "id": "2",
         "name": "recent",
         "tracks": [
-            {
-                "title": "Five Nights at Freddy's 2 - Sound file - \"Hello?\"",
-                "duration": 1436,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000097351338-806y7m-large.jpg",
-                "id": 177208249,
-                "added_by": 166910789
-            },
-            {
-                "title": "Hello",
-                "duration": 9590,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000017194758-dnop3a-large.jpg",
-                "id": 34250966,
-                "added_by": 166910789
-            },
-            {
-                "title": "Tom Hiddleston - Hello Baby",
-                "duration": 1515,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000046736848-kxxg6u-large.jpg",
-                "id": 89952897,
-                "added_by": 166910789
-            },
-            {
-                "title": "TH - Hello Baby",
-                "duration": 1540,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000028828452-wytzt1-large.jpg",
-                "id": 57005042,
-                "added_by": 166910789
-            },
             {
                 "title": "Hello Commander.",
                 "duration": 2350,
@@ -76,6 +56,34 @@
                 "duration": 7052,
                 "artwork_url": null,
                 "id": 85915388,
+                "added_by": 166910789
+            },
+            {
+                "title": "Ready for war ft dj delo x killa B",
+                "duration": 443,
+                "artwork_url": null,
+                "id": 216686267,
+                "added_by": 166910789
+            },
+            {
+                "title": "Sounds from Monday afternoon",
+                "duration": 705,
+                "artwork_url": null,
+                "id": 91972646,
+                "added_by": 166910789
+            },
+            {
+                "title": "What?",
+                "duration": 9326,
+                "artwork_url": null,
+                "id": 140718791,
+                "added_by": 166910789
+            },
+            {
+                "title": "DELO N 2012",
+                "duration": 9821,
+                "artwork_url": null,
+                "id": 85915377,
                 "added_by": 166910789
             }
         ]
