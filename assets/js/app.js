@@ -5,9 +5,11 @@
 
     var tracks = [],
         player,
+        allPlaylists,
         playlist,
         currentTrack,
-        currentUser;
+        currentUser,
+        playing = false;
 
     saatchiMusic.utilities = {
         ajax: function(data) {
@@ -104,8 +106,11 @@
             SC.get('/tracks', {
                 q: searchTerm,
                 duration: {
-                    from: 60000,
-                    to: 600000
+                    // from: 60000,
+                    // to: 600000
+
+                    from: 60,
+                    to: 10000
                 }
             }, function(tracks) {
                 renderSearchResults(tracks);
@@ -158,7 +163,8 @@
                 url: '/playlist',
                 data: {},
                 callback: function(response) {
-                    tracks = response.tracks;
+                    allPlaylists = response;
+                    tracks = response.main.tracks;
 
                     renderPlaylist();
                     player.play(tracks[0]);
@@ -172,8 +178,14 @@
                 url: url,
                 data: data || {},
                 callback: function(response) {
-                    tracks = response.tracks
+                    allPlaylists = response;
+                    tracks = response.main.tracks;
+
                     renderPlaylist();
+
+                    if (!playing) {
+                        player.play(tracks[0]);
+                    }
                 } 
             });
         }
@@ -216,9 +228,11 @@
 
     saatchiMusic.player = function() {
         function play(track) {
-            if (!track) {
+            if (!track || playing) {
                 return false;
             }
+
+            playing = true;
 
             SC.stream('/tracks/' + track.id, function(sound) {
                 var currentTrackAudio;
@@ -235,6 +249,8 @@
         }
 
         function playNext() {
+            playing = false;
+
             playlist.removeTrack();
 
             if (!tracks.length) {

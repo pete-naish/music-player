@@ -56,9 +56,10 @@ DB.getPlaylist = function() {
 
 DB.getPlaylistWithUser = function(playlist) {
     var users = this.getUsers(),
-        playlist = (typeof playlist !== 'undefined') ? playlist : this.getPlaylist();
+        playlist = (typeof playlist !== 'undefined') ? playlist : this.getPlaylist(); // only get the playlist again if it hasn't already been fetched
 
-    playlist.tracks = _.map(playlist.tracks, function(track) {
+    playlist.main.tracks = _.map(playlist.main.tracks, function(track) {
+        // replace the added_by id with the actual user object from the users json
         track.added_by = _.findWhere(users, {id: track.added_by});
         return track;
     });
@@ -69,21 +70,24 @@ DB.getPlaylistWithUser = function(playlist) {
 DB.updatePlaylist = function(track) {
     var playlist = this.getPlaylist();
 
-    if (this.isDuplicate(playlist.tracks, track, "id")) {
+    // if the track is a duplicate, just return existing playlist and do not go further
+    if (this.isDuplicate(playlist.main.tracks, track, "id")) {
         return this.getPlaylistWithUser(playlist);
     }
 
-    playlist.tracks.push(track);
+    // add new track to main playlist
+    playlist.main.tracks.push(track);
 
     this.writeFile(path.join(__dirname, '../', 'data/playlist.json'), playlist);
 
+    // return whole playlist with user details
     return this.getPlaylistWithUser(playlist);
 }
 
 DB.removePlaylistItem = function(id, source, destination) {
-
     var playlist = this.getPlaylist();
 
+    // this removes matching items from the source playlist and adds to destination playlist
     playlist[source].tracks = playlist[source].tracks.filter(function(track) {
         if (track.id !== id * 1) {
             return true;
@@ -92,9 +96,14 @@ DB.removePlaylistItem = function(id, source, destination) {
         return false;
     });
 
+    // keep recent tracks to 10 items
+    playlist.recent.tracks = playlist.recent.tracks.slice(-10);
+
+    // write whole playlist
     this.writeFile(path.join(__dirname, '../', 'data/playlist.json'), playlist);
 
-    return this.getPlaylistWithUser(playlist['main']);
+    // return the whole playlist with user details
+    return this.getPlaylistWithUser(playlist);
 }
 
 module.exports = DB;
