@@ -1,181 +1,253 @@
 (function() {
-"use strict";
+    "use strict";
 
-var saatchiMusic = saatchiMusic || {};
+    var saatchiMusic = saatchiMusic || {};
 
-var PLAYLIST_ID = 132348750,
-    USER_ID = 166910789;
+    var tracks = [],
+        player,
+        playlist,
+        currentTrack,
+        currentUser;
 
-var tracks = [],
-    player,
-    playlist,
-    currentTrack,
-    playlistAPI;
+    saatchiMusic.utilities = {
+        ajax: function(data) {
+                var httpRequest = new XMLHttpRequest();
 
-saatchiMusic.init = function() {
-    var connectButton = document.querySelector('.js-connect');
+                httpRequest.onload = handleResponse;
+                httpRequest.open(data.method, data.url);
+                httpRequest.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+                httpRequest.send(JSON.stringify(data.data));
 
-    connectButton.addEventListener('click', soundCloudLogin);
+                function handleResponse() {
+                    var response;
 
-    player = saatchiMusic.player();
-    playlist = saatchiMusic.playlist();
+                    if (httpRequest.status === 200) {
+                        response = JSON.parse(httpRequest.response);
 
-    function soundCloudLogin() {
-        SC.initialize({
-            client_id: 'a7d2d4f9bbd96add03c6b873e39abbf3',
-            redirect_uri: 'http://local.office-music-player.co.uk/callback.html'
-        }).connect(function(){
-            saatchiMusic.search();
-            playlist.getPlaylist();
-        });
+                        if (typeof data.callback === "function") {
+                            data.callback(response);
+                        }
+                    }
+                }
+        },
+        pluck: function(obj, keys) {
+            var data = {};
+
+            keys.forEach(function(key) { 
+                if (typeof key === 'string' && obj.hasOwnProperty(key)) {
+                    data[key] = obj[key];
+                } else if (typeof key === 'object'){
+                    data[Object.keys(key)] = key[Object.keys(key)]; 
+                }
+            });
+
+            return data;
+        },
+        timeInMinutes: function(time) {
+            var minutes = Math.floor(time / 60000),
+                seconds = ((time % 60000) / 1000).toFixed(0);
+
+          return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
+        }
     }
-}
 
-saatchiMusic.timeInMinutes = function(time) {
-    var minutes = Math.floor(time / 60000),
-        seconds = ((time % 60000) / 1000).toFixed(0);
+    saatchiMusic.init = function() {
+        var connectButton = document.querySelector('.js-connect');
 
-  return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
-}
+        connectButton.addEventListener('click', soundCloudLogin);
 
-saatchiMusic.search = function() {
-    var searchInput = document.querySelector('.js-search-input'),
-        timer = null;
+        player = saatchiMusic.player();
+        playlist = saatchiMusic.playlist();
 
-    searchInput.addEventListener('keyup', function() {
-        clearTimeout(timer);
-        timer = this.value.length ? setTimeout(soundcloudSearch, 250) : null;
-    });
+        function soundCloudLogin() {
+            SC.initialize({
+                client_id: 'a7d2d4f9bbd96add03c6b873e39abbf3',
+                redirect_uri: 'http://local.office-music-player.co.uk/callback.html'
+            }).connect(function(){
+                saatchiMusic.search();
+                playlist.getPlaylist();
+                saatchiMusic.getCurrentUser();
+            });
+        }
+    }
 
-    function soundcloudSearch() {
-        var searchTerm = searchInput.value;
+    saatchiMusic.getCurrentUser = function() {
+        SC.get('/me', function(me) {
+            currentUser = me;
+            saveUser();
+        });
 
-        SC.get('/tracks', {
-            q: searchTerm,
-            duration: {
-                from: 60000,
-                to: 600000
+        function saveUser() {
+            saatchiMusic.utilities.ajax({
+                method: 'POST',
+                url: '/users',
+                data: saatchiMusic.utilities.pluck(currentUser, ['avatar_url', 'id', 'permalink_url', 'username']),
+                callback: function(response) {
+                    // console.log('success');
+                } 
+            });
+        }
+    }
+
+    saatchiMusic.search = function() {
+        var searchInput = document.querySelector('.js-search-input'),
+            timer = null;
+
+        searchInput.addEventListener('keyup', function() {
+            clearTimeout(timer);
+            timer = this.value.length ? setTimeout(soundcloudSearch, 250) : null;
+        });
+
+        function soundcloudSearch() {
+            var searchTerm = searchInput.value;
+
+            SC.get('/tracks', {
+                q: searchTerm,
+                duration: {
+                    from: 60000,
+                    to: 600000
+                }
+            }, function(tracks) {
+                renderSearchResults(tracks);
+            });
+        }
+
+        function renderSearchResults(results) {
+            var searchResultList = document.querySelector('.js-search-result-list');
+
+            while (searchResultList.firstChild) {
+                searchResultList.removeChild(searchResultList.firstChild);
             }
-        }, function(tracks) {
-            renderSearchResults(tracks);
-        });
+
+            results.map(function(result) {
+                var listItem = document.createElement('li'),
+                    listItemLink = document.createElement('a'),
+                    listItemText = document.createTextNode(result.title);
+
+                listItemLink.appendChild(listItemText); 
+                listItem.appendChild(listItemLink); 
+
+                listItem.addEventListener('click', function(){
+                    playlist.addTrack(result);
+                });
+
+                searchResultList.appendChild(listItem);
+            });
+        }
     }
 
-    function renderSearchResults(results) {
-        var searchResultList = document.querySelector('.js-search-result-list');
-
-        while (searchResultList.firstChild) {
-            searchResultList.removeChild(searchResultList.firstChild);
+    saatchiMusic.playlist = function() {
+        function addTrack(track) {
+            var data = saatchiMusic.utilities.pluck(track, ['title', 'duration', 'artwork_url', 'id', {'added_by': currentUser.id}]);
+            syncPlaylist('/playlist', data);
         }
 
-        results.map(function(result) {
-            var listItem = document.createElement('li'),
-                listItemLink = document.createElement('a'),
-                listItemText = document.createTextNode(result.title);
+        function removeTrack() {
+            syncPlaylist('/playlist/' + tracks[0].id);
+            tracks.shift();
+        }
 
-            listItemLink.appendChild(listItemText); 
-            listItem.appendChild(listItemLink); 
+        function skipTrack() {
+            currentTrack.stop();
+            player.playNext();
+        }
 
-            listItem.addEventListener('click', function(){
-                playlist.addTrack(result);
+        function getPlaylist() {
+            saatchiMusic.utilities.ajax({
+                method: 'GET',
+                url: '/playlist',
+                data: {},
+                callback: function(response) {
+                    tracks = response.tracks;
+
+                    renderPlaylist();
+                    player.play(tracks[0]);
+                } 
+            });     
+        }
+
+        function syncPlaylist(url, data) {
+            saatchiMusic.utilities.ajax({
+                method: 'POST',
+                url: url,
+                data: data || {},
+                callback: function(response) {
+                    tracks = response.tracks
+                    renderPlaylist();
+                } 
             });
+        }
 
-            searchResultList.appendChild(listItem);
-        });
-    }
-}
+        function renderPlaylist() {
+            var playlistTracks = document.querySelector('.js-tracklist');
 
-saatchiMusic.playlist = function() {
-    function addTrack(track) {
-        tracks.push(track);
-        getPlaylist();
-    }
-
-    function removeTrack() {
-        tracks.shift();
-        renderPlaylist();
-    }
-
-    function skipTrack() {
-        currentTrack.stop();
-        player.playNext();
-    }
-
-    function getPlaylist() {
-        var httpRequest = new XMLHttpRequest();
-
-        httpRequest.onload = logContents;
-        httpRequest.open('GET', '/playlist');
-        httpRequest.send();
-
-        function logContents() {
-            if (httpRequest.status === 200) {
-                console.log(JSON.parse(httpRequest.response));
+            while (playlistTracks.firstChild) {
+                playlistTracks.removeChild(playlistTracks.firstChild);
             }
-        }
-    }
 
-    function renderPlaylist() {
-        var playlistTracks = document.querySelector('.js-tracklist');
+            tracks.map(function(track) {
+                var playlistItem = document.createElement('tr'),
+                    playlistItemTitle = document.createElement('td'),
+                    playlistItemTitleText = document.createTextNode(track.title),
+                    playlistItemTime = document.createElement('td'),
+                    playlistItemTimeText = document.createTextNode(saatchiMusic.utilities.timeInMinutes(track.duration));
 
-        while (playlistTracks.firstChild) {
-            playlistTracks.removeChild(playlistTracks.firstChild);
-        }
+                playlistItemTitle.appendChild(playlistItemTitleText);
+                playlistItemTime.appendChild(playlistItemTimeText);
+                playlistItem.appendChild(playlistItemTitle);
+                playlistItem.appendChild(playlistItemTime);
 
-        tracks.map(function(track) {
-            var playlistItem = document.createElement('tr'),
-                playlistItemTitle = document.createElement('td'),
-                playlistItemTitleText = document.createTextNode(track.title),
-                playlistItemTime = document.createElement('td'),
-                playlistItemTimeText = document.createTextNode(saatchiMusic.timeInMinutes(track.duration));
+                playlistItem.addEventListener('click', function(){
+                    saatchiMusic.requestSkip(track);
+                });
 
-            playlistItemTitle.appendChild(playlistItemTitleText);
-            playlistItemTime.appendChild(playlistItemTimeText);
-            playlistItem.appendChild(playlistItemTitle);
-            playlistItem.appendChild(playlistItemTime);
-
-            playlistItem.addEventListener('click', function(){
-                saatchiMusic.requestSkip(track);
+                playlistTracks.appendChild(playlistItem);
             });
-
-            playlistTracks.appendChild(playlistItem);
-        });
-    }
-
-    return {
-        addTrack: addTrack,
-        removeTrack: removeTrack,
-        skipTrack: skipTrack,
-        renderPlaylist: renderPlaylist,
-        getPlaylist: getPlaylist
-    }
-}
-
-saatchiMusic.player = function() {
-    function play(track) {
-        SC.stream('/tracks/' + track.id, function(sound) {
-            currentTrack = sound;
-
-            currentTrack.play({
-                onfinish: playNext
-            });
-        });
-    }
-
-    function playNext() {
-        playlist.removeTrack();
-
-        if (!tracks.length) {
-            return false;
         }
-        
-        play(tracks[0]);
+
+        return {
+            addTrack: addTrack,
+            removeTrack: removeTrack,
+            skipTrack: skipTrack,
+            renderPlaylist: renderPlaylist,
+            getPlaylist: getPlaylist
+        }
     }
 
-    return {
-        play: play
-    }
-}
+    saatchiMusic.player = function() {
+        function play(track) {
+            if (!track) {
+                return false;
+            }
 
-saatchiMusic.init();
+            SC.stream('/tracks/' + track.id, function(sound) {
+                var currentTrackAudio;
+
+                currentTrack = sound;
+
+                // fix bug in soundcloud api where onfinish is not called
+                currentTrackAudio = currentTrack._player._html5Audio;
+
+                currentTrackAudio.addEventListener('ended', playNext);
+
+                currentTrack.play();
+            });
+        }
+
+        function playNext() {
+            playlist.removeTrack();
+
+            if (!tracks.length) {
+                return false;
+            }
+            
+            play(tracks[0]);
+        }
+
+        return {
+            play: play
+        }
+    }
+
+    saatchiMusic.init();
 })();

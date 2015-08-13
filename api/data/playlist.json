@@ -1,22 +1,27 @@
 {
-    "id": "1",
-    "name": "playlist",
-    "tracks": [
-        {
-            "track_id": "Mike Hunt",
-            "title": "This is one comment",
-            "duration": "6000",
-            "image": "http://google.co.uk",
-            "added_by": "2",
-            "id": "1"
-        },
-        {
-            "track_id": "Mike Hunt",
-            "title": "This is one comment",
-            "duration": "6000",
-            "image": "http://google.co.uk",
-            "added_by": "2",
-            "id": "1"
-        }
-    ]
+    "main": {
+        "id": "1",
+        "name": "main",
+        "tracks": []
+    },
+    "recent": {
+        "id": "2",
+        "name": "recent",
+        "tracks": [
+            {
+                "title": "Icicle - The Edge ft Metropolis (Radio 1 Rip - Friction's Fire) OUT NOW",
+                "duration": 223028,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000092634613-k6m286-large.jpg",
+                "id": 165870626,
+                "added_by": 166910789
+            },
+            {
+                "title": "Icicle - Problem (Radio 1 Rip - Friction's Fire) OUT NOW",
+                "duration": 159126,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000092634601-c4z03o-large.jpg",
+                "id": 166931890,
+                "added_by": 166910789
+            }
+        ]
+    }
 }

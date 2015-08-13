@@ -1,22 +1,8 @@
 [
     {
-        "author": "Mike Hunt",
-        "text": "This is one comment",
-        "id": "1"
-    },
-    {
-        "author": "Jill Doe",
-        "text": "This is *another* comment",
-        "id": "2"
-    },
-    {
-        "author": "Pete",
-        "text": "Comment!",
-        "id": "3"
-    },
-    {
-        "author": "What!",
-        "text": "Hello",
-        "id": "4"
+        "avatar_url": "https://a1.sndcdn.com/images/default_avatar_large.png",
+        "id": 166910789,
+        "permalink_url": "http://soundcloud.com/saatchi-music-player",
+        "username": "saatchi-music-player"
     }
 ]
