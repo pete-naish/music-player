@@ -45,7 +45,6 @@ app.get('/playlist', function(req, res) {
 
 app.post('/playlist', function(req, res) {
     res.send(DB.updatePlaylist(req));
-    console.log(req.headers);
 });
 
 app.post('/playlist/:id', function(req, res) {
@@ -53,6 +52,5 @@ app.post('/playlist/:id', function(req, res) {
 });
 
 io.on('connection', function(socket) {
-    console.log('connected yo');
     DB.setSockets(socket);
 });
