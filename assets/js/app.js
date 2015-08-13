@@ -9,7 +9,8 @@
         playlist,
         currentTrack,
         currentUser,
-        playing = false;
+        playing = false,
+        socket = io();
 
     saatchiMusic.utilities = {
         ajax: function(data) {
@@ -18,6 +19,7 @@
                 httpRequest.onload = handleResponse;
                 httpRequest.open(data.method, data.url);
                 httpRequest.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
+                httpRequest.setRequestHeader('user', currentUser.id);
                 httpRequest.send(JSON.stringify(data.data));
 
                 function handleResponse() {
@@ -67,7 +69,6 @@
                 redirect_uri: 'http://local.office-music-player.co.uk/callback.html'
             }).connect(function(){
                 saatchiMusic.search();
-                playlist.getPlaylist();
                 saatchiMusic.getCurrentUser();
             });
         }
@@ -77,6 +78,7 @@
         SC.get('/me', function(me) {
             currentUser = me;
             saveUser();
+            playlist.getPlaylist();
         });
 
         function saveUser() {
@@ -142,6 +144,12 @@
     }
 
     saatchiMusic.playlist = function() {
+        socket.on('playlist_updated', function(data) {
+            if (data.user !== currentUser) {
+                apiCallback(data.data);
+            }
+        });
+
         function addTrack(track) {
             var data = saatchiMusic.utilities.pluck(track, ['title', 'duration', 'artwork_url', 'id', {'added_by': currentUser.id}]);
             syncPlaylist('/playlist', data);
@@ -162,13 +170,7 @@
                 method: 'GET',
                 url: '/playlist',
                 data: {},
-                callback: function(response) {
-                    allPlaylists = response;
-                    tracks = response.main.tracks;
-
-                    renderPlaylist();
-                    player.play(tracks[0]);
-                } 
+                callback: apiCallback
             });     
         }
 
@@ -177,17 +179,19 @@
                 method: 'POST',
                 url: url,
                 data: data || {},
-                callback: function(response) {
-                    allPlaylists = response;
-                    tracks = response.main.tracks;
-
-                    renderPlaylist();
-
-                    if (!playing) {
-                        player.play(tracks[0]);
-                    }
-                } 
+                callback: apiCallback
             });
+        }
+
+        function apiCallback(response) {
+            allPlaylists = response;
+            tracks = response.main.tracks;
+
+            renderPlaylist();
+
+            if (!playing) {
+                player.play(tracks[0]);
+            }
         }
 
         function renderPlaylist() {

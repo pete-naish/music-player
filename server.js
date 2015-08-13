@@ -1,11 +1,18 @@
 var fs = require('fs'),
-path = require('path'),
-express = require('express'),
-bodyParser = require('body-parser'),
-app = express(),
-DB = require('./api/file/file.js');
+    path = require('path'),
+    express = require('express'),
+    bodyParser = require('body-parser'),
+    app = express(),
+    DB = require('./api/file/file.js'),
+    server, io;
 
 app.set('port', (process.env.PORT || 3000));
+
+server = app.listen(app.get('port'), function() {
+    console.log('Server started: http://localhost:' + app.get('port') + '/');
+});
+
+io = require('socket.io').listen(server);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
@@ -37,13 +44,15 @@ app.get('/playlist', function(req, res) {
 });
 
 app.post('/playlist', function(req, res) {
-    res.send(DB.updatePlaylist(req.body));
+    res.send(DB.updatePlaylist(req));
+    console.log(req.headers);
 });
 
 app.post('/playlist/:id', function(req, res) {
     res.send(DB.removePlaylistItem(req.params.id, 'main', 'recent')); 
 });
 
-app.listen(app.get('port'), function() {
-    console.log('Server started: http://localhost:' + app.get('port') + '/');
+io.on('connection', function(socket) {
+    console.log('connected yo');
+    DB.setSockets(socket);
 });

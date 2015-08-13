@@ -3,6 +3,18 @@ var path = require('path'),
     _ = require('underscore'),
     DB = {};
 
+DB.setSockets = function(socket) {
+    this.socket = socket;
+}
+
+DB.sendSockets = function(event, data) {
+    if (!this.socket) {
+        return false;
+    }
+
+    this.socket.emit(event, data);
+}
+
 DB.getFile = function(file) {
     return fs.readFileSync(file).toString();
 }
@@ -67,8 +79,10 @@ DB.getPlaylistWithUser = function(playlist) {
     return playlist;
 }
 
-DB.updatePlaylist = function(track) {
-    var playlist = this.getPlaylist();
+DB.updatePlaylist = function(req) {
+    var playlist = this.getPlaylist(),
+        track = req.body,
+        user = req.header.user;
 
     // if the track is a duplicate, just return existing playlist and do not go further
     if (this.isDuplicate(playlist.main.tracks, track, "id")) {
@@ -79,6 +93,8 @@ DB.updatePlaylist = function(track) {
     playlist.main.tracks.push(track);
 
     this.writeFile(path.join(__dirname, '../', 'data/playlist.json'), playlist);
+
+    this.sendSockets('playlist_updated', { data: this.getPlaylistWithUser(playlist), user: user });
 
     // return whole playlist with user details
     return this.getPlaylistWithUser(playlist);
