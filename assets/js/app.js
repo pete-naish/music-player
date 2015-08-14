@@ -76,6 +76,7 @@
 
     saatchiMusic.getCurrentUser = function() {
         SC.get('/me', function(me) {
+            me.id = me.id + (Math.random() * 10); // delete this when live
             currentUser = me;
             saveUser();
             playlist.getPlaylist();
@@ -145,6 +146,7 @@
 
     saatchiMusic.playlist = function() {
         socket.on('playlist_updated', function(data) {
+            console.log('updated');
             if (data.user !== currentUser) {
                 apiCallback(data.data);
             }

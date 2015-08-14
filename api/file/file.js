@@ -94,21 +94,27 @@ DB.updatePlaylist = function(req) {
 
     this.writeFile(path.join(__dirname, '../', 'data/playlist.json'), playlist);
 
+    // emit event to update client screens
     this.sendSockets('playlist_updated', { data: this.getPlaylistWithUser(playlist), user: user });
 
     // return whole playlist with user details
     return this.getPlaylistWithUser(playlist);
 }
 
-DB.removePlaylistItem = function(id, source, destination) {
-    var playlist = this.getPlaylist();
+DB.removePlaylistItem = function(req, source, destination) {
+    var id = req.params.id,
+        user = req.header.user,
+        playlist = this.getPlaylist();
 
     // this removes matching items from the source playlist and adds to destination playlist
     playlist[source].tracks = playlist[source].tracks.filter(function(track) {
         if (track.id !== id * 1) {
             return true;
         }
-        playlist[destination].tracks.push(track);
+        // only add to recent if it's not a duplicate
+        if (!DB.isDuplicate(playlist.recent.tracks, track, "id")) {
+            playlist[destination].tracks.push(track);
+        }
         return false;
     });
 
@@ -117,6 +123,9 @@ DB.removePlaylistItem = function(id, source, destination) {
 
     // write whole playlist
     this.writeFile(path.join(__dirname, '../', 'data/playlist.json'), playlist);
+
+    // emit event to update client screens
+    this.sendSockets('playlist_updated', { data: this.getPlaylistWithUser(playlist), user: user });
 
     // return the whole playlist with user details
     return this.getPlaylistWithUser(playlist);

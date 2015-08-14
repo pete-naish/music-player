@@ -48,7 +48,7 @@ app.post('/playlist', function(req, res) {
 });
 
 app.post('/playlist/:id', function(req, res) {
-    res.send(DB.removePlaylistItem(req.params.id, 'main', 'recent')); 
+    res.send(DB.removePlaylistItem(req, 'main', 'recent')); 
 });
 
 io.on('connection', function(socket) {
