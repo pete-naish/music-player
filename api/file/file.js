@@ -60,6 +60,76 @@ DB.isDuplicate = function(list, item, key) {
     return false;
 }
 
+DB.vote = function(req) {
+    var playlist = this.getPlaylist(),
+        trackId = req.params.id,
+        dir = ((req.params.dir === "up") ? 1 : -1),
+        user = req.headers.user,
+        _track;
+
+    _.each(playlist.main.tracks, function(track){
+        var indexUpVoted,
+            indexDownVoted,
+            userHasUpvoted,
+            userHasDownVoted;
+
+        if (track.id === (trackId * 1)) {
+
+            // Set votes if null
+            track.votes = track.votes || [];
+            track.voteCount = track.voteCount || 0;
+
+            var voted = _.findWhere(track.votes, {'user': user});
+
+            voted = {user: 'yesy', type: 1}
+
+            if(!voted){
+                // Do as normal
+                if(dir === -1){
+                    return false;
+                }
+            }
+            else{
+                // Remove all use data to date from this object
+                track.votes = _.filter(track.votes, function(vote){
+                    return vote.user !== user;
+                })
+                // Switch state of vote
+                dir = dir*-1;
+            }
+
+            track.votes.push({user: user, type: dir});
+            var pos_votes =  _.findWhere(track.votes, {type: 1}) || [];
+            track.voteCount = pos_votes.length;
+            _track = track;
+
+            if (track.vote === 3) {
+                DB.bumpTrack(_track);
+            } else if (track.vote === -3) {
+                DB.dumpTrack(_track);
+            }
+        }
+    });
+
+    if(!_track){
+        return false;
+    }
+
+    this.writeFile(path.join(__dirname, '../', 'data/playlist.json'), playlist);
+
+    this.sendSockets('votes_updated', { data: _track, user: user });
+
+    return _track;    
+}
+
+DB.bumpTrack = function(track) {
+    DB.sendSockets('bump_track', { data: track });
+}
+
+DB.dumpTrack = function(track) {
+    DB.sendSockets('dump_track', { data: track });
+}
+
 DB.getPlaylist = function() {
     var playlist = JSON.parse(this.getFile(path.join(__dirname, '../', 'data/playlist.json')));
 
@@ -82,7 +152,7 @@ DB.getPlaylistWithUser = function(playlist) {
 DB.updatePlaylist = function(req) {
     var playlist = this.getPlaylist(),
         track = req.body,
-        user = req.header.user;
+        user = req.headers.user;
 
     // if the track is a duplicate, just return existing playlist and do not go further
     if (this.isDuplicate(playlist.main.tracks, track, "id")) {
@@ -103,7 +173,7 @@ DB.updatePlaylist = function(req) {
 
 DB.removePlaylistItem = function(req, source, destination) {
     var id = req.params.id,
-        user = req.header.user,
+        user = req.headers.user,
         playlist = this.getPlaylist();
 
     // this removes matching items from the source playlist and adds to destination playlist

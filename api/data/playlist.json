@@ -1,61 +1,95 @@
 {
     "main": {
-        "id": "1",
-        "name": "main",
-        "tracks": []
-    },
-    "recent": {
-        "id": "2",
-        "name": "recent",
         "tracks": [
             {
-                "title": "It's Jared Leto Wake the hell up",
-                "duration": 2507,
+                "title": "OMFG - Hello",
+                "duration": 226371,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000121651065-hmg7r8-large.jpg",
+                "id": 178220277,
+                "added_by": 166910789,
+                "votes": [
+                    {
+                        "user": "166910789",
+                        "type": 1
+                    }
+                ]
+            }
+        ]
+    },
+    "recent": {
+        "tracks": [
+            {
+                "title": "Station ID Robot Hel - Tre",
+                "duration": 9590,
                 "artwork_url": null,
-                "id": 131073897,
-                "added_by": 166910789
+                "id": 56932253,
+                "added_by": 166910791.76068893
             },
             {
-                "title": "HELL YEAH",
-                "duration": 1907,
+                "title": "Tommy \"Hel-lo!\"",
+                "duration": 6557,
                 "artwork_url": null,
-                "id": 123537366,
-                "added_by": 166910795.27141917
+                "id": 144432169,
+                "added_by": 166910791.76068893
             },
             {
-                "title": "Belle - What the hell (Kris Menace & Lifelike Remix)",
-                "duration": 7812,
+                "title": "From Hel To Sky. at Middel",
+                "duration": 8881,
                 "artwork_url": null,
-                "id": 38538890,
-                "added_by": 166910795.27141917
+                "id": 162491082,
+                "added_by": 166910791.76068893
             },
             {
-                "title": "Oh hell nooo",
-                "duration": 5068,
+                "title": "Fun In Hel.",
+                "duration": 8411,
                 "artwork_url": null,
-                "id": 183197651,
-                "added_by": 166910795.27141917
+                "id": 162490603,
+                "added_by": 166910791.76068893
             },
             {
-                "title": "03 - Hell Yeah Ft. Parker.mp3",
-                "duration": 6060,
+                "title": "Hel",
+                "duration": 4127,
                 "artwork_url": null,
-                "id": 126485419,
-                "added_by": 166910795.27141917
+                "id": 110304305,
+                "added_by": 166910791.76068893
             },
             {
-                "title": "What the bloody hell is this track?",
-                "duration": 7367,
-                "artwork_url": null,
-                "id": 111223922,
-                "added_by": 166910795.27141917
+                "title": "Hello Vs. Party & Bullshit (Matoma Remix)",
+                "duration": 400938,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000096726110-03mo59-large.jpg",
+                "id": 176259218,
+                "added_by": 166910793.7336586,
+                "vote": 5
             },
             {
-                "title": "Is there a hell?...",
-                "duration": 5641,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000090699346-n7j3uq-large.jpg",
-                "id": 167227452,
-                "added_by": 166910795.27141917
+                "title": "Avril Lavigne - Hello Kitty",
+                "duration": 192148,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000062242380-txrmzb-large.jpg",
+                "id": 119205434,
+                "added_by": 166910793.7336586
+            },
+            {
+                "title": "OMFG - Hello",
+                "duration": 226398,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000101331401-iecrgv-large.jpg",
+                "id": 183125558,
+                "added_by": 166910793.7336586
+            },
+            {
+                "title": "OMFG - Hello",
+                "duration": 226371,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000121651065-hmg7r8-large.jpg",
+                "id": 178220277,
+                "added_by": 166910796.23470542,
+                "vote": 1
+            },
+            {
+                "title": "B.o.B - High as Hell - feat - Wiz Khalifa - prod by B.o.B",
+                "duration": 241158,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000075288047-flbcc5-large.jpg",
+                "id": 142576717,
+                "added_by": 166910796.71667373,
+                "vote": 2
             }
         ]
     }

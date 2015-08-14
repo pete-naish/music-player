@@ -45,3 +45,52 @@ tr,
 .search-results {
 	cursor: pointer;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+html,
+body {
+	height: 100%;
+}
+
+
+.saatchi-music {
+	display: flex;
+	height: 100%;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+}
+
+.col {
+	height: 100%;
+	flex-direction: column;
+	flex: auto;
+	overflow-y: auto;
+}
+
+.playlist-container {
+	width: 80%;
+}
+
+.search-container {
+	width: 20%;
+}

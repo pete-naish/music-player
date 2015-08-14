@@ -6,30 +6,32 @@
     </head>
     <body>
         <button class="button--reset-style js-connect"><img src="img/min/btn-connect-l.png" alt=""></button>
-        <section class="search-container">
-            <!-- <img class="brand-logo" src="logo.png" alt=""> -->
-            <form class="search-form" action="#">
-                <input class="search-form__input js-search-input" type="search">
-                <ul class="search-results js-search-result-list">
-                    
+        <section class="saatchi-music">
+            <section class="col search-container">
+                <!-- <img class="brand-logo" src="logo.png" alt=""> -->
+                <form class="search-form" action="#">
+                    <input class="search-form__input js-search-input" type="search">
+                    <ul class="search-results js-search-result-list">
+                        
+                    </ul>
+                </form>
+            </section>
+            <section class="col playlist-container">
+                <h1>The playlist</h1>
+                <table class="playlist js-playlist">
+                    <!-- <thead class="playlist__headings">
+                        <tr>
+                            <th>SONG</th>
+                            <th>LENGTH</th>
+                        </tr>
+                    </thead> -->
+                    <tbody class="playlist__tracks js-tracklist"></tbody>
+                </table>
+                <ul>
+                    <li>CURRENT SONG TITLE - ARTIST || > >|</li>
+                    <li>Song title - Artist (delete) (drag to move up or down)</li>
                 </ul>
-            </form>
-        </section>
-        <section class="playlist-container">
-            <h1>The playlist</h1>
-            <table class="playlist js-playlist">
-                <!-- <thead class="playlist__headings">
-                    <tr>
-                        <th>SONG</th>
-                        <th>LENGTH</th>
-                    </tr>
-                </thead> -->
-                <tbody class="playlist__tracks js-tracklist"></tbody>
-            </table>
-            <ul>
-                <li>CURRENT SONG TITLE - ARTIST || > >|</li>
-                <li>Song title - Artist (delete) (drag to move up or down)</li>
-            </ul>
+            </section>
         </section>
         <script src="//connect.soundcloud.com/sdk-2.0.0.js"></script>
         <script src="https://cdn.socket.io/socket.io-1.3.5.js"></script>

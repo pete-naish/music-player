@@ -5,17 +5,17 @@
 
     var tracks = [],
         player,
-        allPlaylists,
         playlist,
         currentTrack,
         currentUser,
         playing = false,
-        socket = io();
+        socket = io(),
+        userVotes = [];
 
     saatchiMusic.utilities = {
         ajax: function(data) {
                 var httpRequest = new XMLHttpRequest();
-
+                var self = this;
                 httpRequest.onload = handleResponse;
                 httpRequest.open(data.method, data.url);
                 httpRequest.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
@@ -29,7 +29,7 @@
                         response = JSON.parse(httpRequest.response);
 
                         if (typeof data.callback === "function") {
-                            data.callback(response);
+                            data.callback.call(self, response);
                         }
                     }
                 }
@@ -76,7 +76,7 @@
 
     saatchiMusic.getCurrentUser = function() {
         SC.get('/me', function(me) {
-            me.id = me.id + (Math.random() * 10); // delete this when live
+            // me.id = me.id + (Math.random() * 10); // delete this when live
             currentUser = me;
             saveUser();
             playlist.getPlaylist();
@@ -109,11 +109,11 @@
             SC.get('/tracks', {
                 q: searchTerm,
                 duration: {
-                    // from: 60000,
-                    // to: 600000
+                    from: 60000,
+                    to: 600000
 
-                    from: 60,
-                    to: 10000
+                    // from: 60,
+                    // to: 10000
                 }
             }, function(tracks) {
                 renderSearchResults(tracks);
@@ -146,10 +146,13 @@
 
     saatchiMusic.playlist = function() {
         socket.on('playlist_updated', function(data) {
-            console.log('updated');
             if (data.user !== currentUser) {
                 apiCallback(data.data);
             }
+        });
+
+        socket.on('votes_updated', function(data) {
+            // this needs to update client vote count
         });
 
         function addTrack(track) {
@@ -160,6 +163,17 @@
         function removeTrack() {
             syncPlaylist('/playlist/' + tracks[0].id);
             tracks.shift();
+        }
+
+        function vote(track, dir) {
+            saatchiMusic.utilities.ajax.call(this, {
+                method: 'GET',
+                url: '/vote/' + track.id + '/' + dir,
+                data: {},
+                callback: function(response) {
+                    this.innerHTML = response.voteCount;
+                }
+            });
         }
 
         function skipTrack() {
@@ -186,7 +200,6 @@
         }
 
         function apiCallback(response) {
-            allPlaylists = response;
             tracks = response.main.tracks;
 
             renderPlaylist();
@@ -208,15 +221,34 @@
                     playlistItemTitle = document.createElement('td'),
                     playlistItemTitleText = document.createTextNode(track.title),
                     playlistItemTime = document.createElement('td'),
+                    playlistItemVoteUp = document.createElement('a'),
+                    playlistItemVoteCount = document.createElement('span'),
+                    playlistItemVoteDown = document.createElement('a'),
                     playlistItemTimeText = document.createTextNode(saatchiMusic.utilities.timeInMinutes(track.duration));
 
-                playlistItemTitle.appendChild(playlistItemTitleText);
+                playlistItemVoteUp.innerHTML = 'vote up';
+                playlistItemVoteUp.className = 'vote-up';
+
+                playlistItemVoteDown.innerHTML = 'vote down';
+                playlistItemVoteDown.className = 'vote-down';
+
+                playlistItemVoteCount.innerHTML = (track.voteCount || 0);
+                playlistItemVoteCount.className = 'votes';
+
+                playlistItemTitle.appendChild(playlistItemTitleText)
+                playlistItemTitle.appendChild(playlistItemVoteDown)
+                playlistItemTitle.appendChild(playlistItemVoteCount)
+                playlistItemTitle.appendChild(playlistItemVoteUp);
                 playlistItemTime.appendChild(playlistItemTimeText);
                 playlistItem.appendChild(playlistItemTitle);
                 playlistItem.appendChild(playlistItemTime);
 
-                playlistItem.addEventListener('click', function(){
-                    saatchiMusic.requestSkip(track);
+                playlistItem.addEventListener('click', function(e){
+                    if (e.target.className === 'vote-up') {
+                        playlist.vote.call(playlistItemVoteCount, track, 'up');
+                    } else {
+                        playlist.vote.call(playlistItemVoteCount, track, 'down');
+                    }
                 });
 
                 playlistTracks.appendChild(playlistItem);
@@ -226,6 +258,7 @@
         return {
             addTrack: addTrack,
             removeTrack: removeTrack,
+            vote: vote,
             skipTrack: skipTrack,
             renderPlaylist: renderPlaylist,
             getPlaylist: getPlaylist

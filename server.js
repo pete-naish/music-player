@@ -51,6 +51,10 @@ app.post('/playlist/:id', function(req, res) {
     res.send(DB.removePlaylistItem(req, 'main', 'recent')); 
 });
 
+app.get('/vote/:id/:dir', function(req, res) {
+    res.send(DB.vote(req)); 
+});
+
 io.on('connection', function(socket) {
     DB.setSockets(socket);
 });
