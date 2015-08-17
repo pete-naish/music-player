@@ -2,94 +2,192 @@
     "main": {
         "tracks": [
             {
-                "title": "OMFG - Hello",
-                "duration": 226371,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000121651065-hmg7r8-large.jpg",
-                "id": 178220277,
-                "added_by": 166910789,
+                "title": "Skrillex - Bug Hunt (Wreck-it Ralph) (Noisia Remix)",
+                "duration": 423876,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000033192410-dw4w6j-large.jpg",
+                "id": 65419285,
+                "added_by": 19996905,
                 "votes": [
                     {
-                        "user": "166910789",
-                        "type": 1
+                        "user": "19996905",
+                        "type": -1
                     }
-                ]
+                ],
+                "voteCount": -1
             }
         ]
     },
     "recent": {
         "tracks": [
             {
-                "title": "Station ID Robot Hel - Tre",
-                "duration": 9590,
-                "artwork_url": null,
-                "id": 56932253,
-                "added_by": 166910791.76068893
+                "title": "Dillon Francis - Drunk All The Time (The Rebirth) [feat. Simon Lord]",
+                "duration": 225221,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000097716855-hnynij-large.jpg",
+                "id": 177755123,
+                "added_by": 166910789,
+                "votes": [
+                    {
+                        "user": "166910789",
+                        "type": -1
+                    }
+                ],
+                "voteCount": 0
             },
             {
-                "title": "Tommy \"Hel-lo!\"",
-                "duration": 6557,
-                "artwork_url": null,
-                "id": 144432169,
-                "added_by": 166910791.76068893
+                "title": "The Sound Of Silence (Simon & Garfunkel)",
+                "duration": 199253,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000066695100-89jqgb-large.jpg",
+                "id": 127261456,
+                "added_by": 166910789
             },
             {
-                "title": "From Hel To Sky. at Middel",
-                "duration": 8881,
-                "artwork_url": null,
-                "id": 162491082,
-                "added_by": 166910791.76068893
+                "title": "Pharoahe Monch - Simon Says (Brillz & Etc!Etc! Trap Remix)",
+                "duration": 209077,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000031007989-05f8kb-large.jpg",
+                "id": 58640749,
+                "added_by": 166910789,
+                "votes": [
+                    {
+                        "user": "166910789",
+                        "type": -1
+                    }
+                ],
+                "voteCount": 0
             },
             {
-                "title": "Fun In Hel.",
-                "duration": 8411,
-                "artwork_url": null,
-                "id": 162490603,
-                "added_by": 166910791.76068893
+                "title": "Miley Cyrus - 50 Ways to Leave Your Lover (Paul Simon Cover)",
+                "duration": 217019,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000106896170-waltl1-large.jpg",
+                "id": 191393777,
+                "added_by": 166910789,
+                "votes": [
+                    {
+                        "user": "166910789",
+                        "type": -1
+                    }
+                ],
+                "voteCount": 0
             },
             {
-                "title": "Hel",
-                "duration": 4127,
-                "artwork_url": null,
-                "id": 110304305,
-                "added_by": 166910791.76068893
+                "title": "Deadmau5 - Raise Your Weapon (Noisia Remix)",
+                "duration": 194763,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000007527658-smjpzh-large.jpg",
+                "id": 15784497,
+                "added_by": 19996905,
+                "votes": [
+                    {
+                        "user": "19996905",
+                        "type": 0
+                    },
+                    {
+                        "user": "19996905",
+                        "type": 1
+                    }
+                ],
+                "voteCount": 0
             },
             {
-                "title": "Hello Vs. Party & Bullshit (Matoma Remix)",
-                "duration": 400938,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000096726110-03mo59-large.jpg",
-                "id": 176259218,
-                "added_by": 166910793.7336586,
-                "vote": 5
+                "title": "Noisia - Tommy's Theme",
+                "duration": 280530,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000012001807-shkj9o-large.jpg",
+                "id": 24147530,
+                "added_by": 19996905,
+                "votes": [
+                    {
+                        "user": "19996905",
+                        "type": 0
+                    },
+                    {
+                        "user": "19996905",
+                        "type": -1
+                    }
+                ],
+                "voteCount": 0
             },
             {
-                "title": "Avril Lavigne - Hello Kitty",
-                "duration": 192148,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000062242380-txrmzb-large.jpg",
-                "id": 119205434,
-                "added_by": 166910793.7336586
+                "title": "The Prodigy - Smack My Bitch Up (Noisia Remix) at MistaJam 2012-10-17",
+                "duration": 359582,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000032422330-8n7qyw-large.jpg",
+                "id": 63892903,
+                "added_by": 19996905,
+                "votes": [
+                    {
+                        "user": "19996905",
+                        "type": 1
+                    }
+                ],
+                "voteCount": [
+                    {
+                        "user": "19996905",
+                        "type": 1
+                    }
+                ]
             },
             {
-                "title": "OMFG - Hello",
-                "duration": 226398,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000101331401-iecrgv-large.jpg",
-                "id": 183125558,
-                "added_by": 166910793.7336586
+                "title": "Hybrid - Power Curve (Noisia Driveclub Remix)",
+                "duration": 286171,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000093224110-fdew6t-large.jpg",
+                "id": 171055579,
+                "added_by": 19996905,
+                "votes": [
+                    {
+                        "user": "19996905",
+                        "type": 0
+                    },
+                    {
+                        "user": "19996905",
+                        "type": -1
+                    },
+                    {
+                        "user": "19996905",
+                        "type": 0
+                    }
+                ],
+                "voteCount": [
+                    {
+                        "user": "19996905",
+                        "type": 0
+                    },
+                    {
+                        "user": "19996905",
+                        "type": -1
+                    },
+                    {
+                        "user": "19996905",
+                        "type": 0
+                    }
+                ]
             },
             {
-                "title": "OMFG - Hello",
-                "duration": 226371,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000121651065-hmg7r8-large.jpg",
-                "id": 178220277,
-                "added_by": 166910796.23470542,
-                "vote": 1
+                "title": "Labrinth ft. Tinie Tempah - Earthquake (Noisia Remix)",
+                "duration": 389371,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000011681052-n1a6w6-large.jpg",
+                "id": 23547065,
+                "added_by": 19996905,
+                "votes": [
+                    {
+                        "user": "19996905",
+                        "type": 0
+                    }
+                ],
+                "voteCount": {
+                    "user": "19996905",
+                    "type": 0
+                }
             },
             {
-                "title": "B.o.B - High as Hell - feat - Wiz Khalifa - prod by B.o.B",
-                "duration": 241158,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000075288047-flbcc5-large.jpg",
-                "id": 142576717,
-                "added_by": 166910796.71667373,
-                "vote": 2
+                "title": "Noisia - Machine Gun (16bit Remix)",
+                "duration": 211358,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000000904695-8p77h4-large.jpg",
+                "id": 1468152,
+                "added_by": 19996905,
+                "votes": [
+                    {
+                        "user": "19996905",
+                        "type": 1
+                    }
+                ],
+                "voteCount": 1
             }
         ]
     }

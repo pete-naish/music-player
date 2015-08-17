@@ -68,39 +68,30 @@ DB.vote = function(req) {
         _track;
 
     _.each(playlist.main.tracks, function(track){
-        var indexUpVoted,
-            indexDownVoted,
-            userHasUpvoted,
-            userHasDownVoted;
 
         if (track.id === (trackId * 1)) {
+            var voted;
 
             // Set votes if null
             track.votes = track.votes || [];
-            track.voteCount = track.voteCount || 0;
+            track.voteCount = 0;
 
-            var voted = _.findWhere(track.votes, {'user': user});
+            voted = _.findWhere(track.votes, {'user': user});
 
-            voted = {user: 'yesy', type: 1}
+            if (voted) {
+                track.votes = _.without(track.votes, voted);
 
-            if(!voted){
-                // Do as normal
-                if(dir === -1){
-                    return false;
+                if (dir === voted.type) {
+                    dir = 0;
                 }
-            }
-            else{
-                // Remove all use data to date from this object
-                track.votes = _.filter(track.votes, function(vote){
-                    return vote.user !== user;
-                })
-                // Switch state of vote
-                dir = dir*-1;
             }
 
             track.votes.push({user: user, type: dir});
-            var pos_votes =  _.findWhere(track.votes, {type: 1}) || [];
-            track.voteCount = pos_votes.length;
+
+            for (var i = 0, len = track.votes.length; i < len; i++) {
+                track.voteCount += track.votes[i].type;
+            }
+
             _track = track;
 
             if (track.vote === 3) {

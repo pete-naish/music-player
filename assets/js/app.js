@@ -221,30 +221,34 @@
                     playlistItemTitle = document.createElement('td'),
                     playlistItemTitleText = document.createTextNode(track.title),
                     playlistItemTime = document.createElement('td'),
+                    playlistItemVote = document.createElement('td'),
                     playlistItemVoteUp = document.createElement('a'),
                     playlistItemVoteCount = document.createElement('span'),
                     playlistItemVoteDown = document.createElement('a'),
                     playlistItemTimeText = document.createTextNode(saatchiMusic.utilities.timeInMinutes(track.duration));
 
-                playlistItemVoteUp.innerHTML = 'vote up';
-                playlistItemVoteUp.className = 'vote-up';
 
-                playlistItemVoteDown.innerHTML = 'vote down';
-                playlistItemVoteDown.className = 'vote-down';
+
+                playlistItemVoteUp.innerHTML = 'bump';
+                playlistItemVoteUp.className = 'bump';
+
+                playlistItemVoteDown.innerHTML = 'dump';
+                playlistItemVoteDown.className = 'dump';
 
                 playlistItemVoteCount.innerHTML = (track.voteCount || 0);
                 playlistItemVoteCount.className = 'votes';
 
                 playlistItemTitle.appendChild(playlistItemTitleText)
-                playlistItemTitle.appendChild(playlistItemVoteDown)
-                playlistItemTitle.appendChild(playlistItemVoteCount)
-                playlistItemTitle.appendChild(playlistItemVoteUp);
+                playlistItemVote.appendChild(playlistItemVoteDown)
+                playlistItemVote.appendChild(playlistItemVoteCount)
+                playlistItemVote.appendChild(playlistItemVoteUp);
                 playlistItemTime.appendChild(playlistItemTimeText);
                 playlistItem.appendChild(playlistItemTitle);
+                playlistItem.appendChild(playlistItemVote);
                 playlistItem.appendChild(playlistItemTime);
 
                 playlistItem.addEventListener('click', function(e){
-                    if (e.target.className === 'vote-up') {
+                    if (e.target.className === 'bump') {
                         playlist.vote.call(playlistItemVoteCount, track, 'up');
                     } else {
                         playlist.vote.call(playlistItemVoteCount, track, 'down');
