@@ -121,21 +121,22 @@ DB.bumpTrack = function(track) {
 }
 
 DB.dumpTrack = function(track) {
-    var playlist = this.getPlaylist(),
-        id = track.id;
+    this.sendSockets('dump_track', {data: track});
+    // var playlist = this.getPlaylist(),
+    //     id = track.id;
 
-    playlist.main.tracks = playlist.main.tracks.filter(function(track) {
-        return (track.id !== id);
-    });
+    // playlist.main.tracks = playlist.main.tracks.filter(function(track) {
+    //     return (track.id !== id);
+    // });
 
-    // write whole playlist
-    this.writeFile(path.join(__dirname, '../', 'data/playlist.json'), playlist);
+    // // write whole playlist
+    // this.writeFile(path.join(__dirname, '../', 'data/playlist.json'), playlist);
 
-    // emit event to update client screens
-    this.sendSockets('dump_track', { data: this.getPlaylistWithUser(playlist) });
+    // // emit event to update client screens
+    // this.sendSockets('dump_track', { data: this.getPlaylistWithUser(playlist) });
 
-    // return the whole playlist with user details
-    return this.getPlaylistWithUser(playlist);
+    // // return the whole playlist with user details
+    // return this.getPlaylistWithUser(playlist);
 }
 
 DB.getPlaylist = function() {

@@ -109,11 +109,11 @@
             SC.get('/tracks', {
                 q: searchTerm,
                 duration: {
-                    // from: 60000,
-                    // to: 600000
+                    from: 60000,
+                    to: 600000
 
-                    from: 1000,
-                    to: 10000
+                    // from: 1000,
+                    // to: 10000
                 }
             }, function(tracks) {
                 renderSearchResults(tracks);
@@ -160,8 +160,6 @@
         });
 
         socket.on('dump_track', function(data) {
-            tracks = data.data.main.tracks;
-
             skipTrack();
         });
 
@@ -187,11 +185,8 @@
         }
 
         function skipTrack() {
-            playing = false;
-
             currentTrack.stop();
-            renderPlaylist();
-            player.play(tracks[0]);
+            player.playNext();
         }
 
         function getPlaylist() {

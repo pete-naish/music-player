@@ -7,6 +7,12 @@
     }
 }
 
+.playlist__track:nth-child(2) {
+    .bump {
+        visibility: hidden;
+    }
+}
+
 .dump {
     visibility: hidden;
 }

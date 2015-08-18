@@ -6,19 +6,19 @@
                 "duration": 176969,
                 "artwork_url": "https://i1.sndcdn.com/artworks-000074385548-u3v0l1-large.jpg",
                 "id": 141050282,
-                "added_by": 19996905
+                "added_by": 19996905,
+                "votes": [
+                    {
+                        "user": "19996905",
+                        "type": -1
+                    }
+                ],
+                "voteCount": -1
             }
         ]
     },
     "recent": {
         "tracks": [
-            {
-                "title": "Dubmatix Dubstep Drums Compression C 140bpm",
-                "duration": 6922,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000056419299-zy14rt-large.jpg",
-                "id": 107672465,
-                "added_by": 19996905
-            },
             {
                 "title": "Dubstep8",
                 "duration": 3526,
@@ -81,6 +81,15 @@
                 "artwork_url": "https://i1.sndcdn.com/artworks-000068216488-8vz6pl-large.jpg",
                 "id": 130069692,
                 "added_by": 19996905
+            },
+            {
+                "title": "Noisia & Phace - Micro Organism",
+                "duration": 380303,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000013441912-cqkopv-large.jpg",
+                "id": 26902063,
+                "added_by": 19996905,
+                "votes": [],
+                "voteCount": 0
             }
         ]
     }

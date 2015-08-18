@@ -215,6 +215,9 @@ h1, h2, h3, h4, h5, h6 {
 .playlist__track:first-child .dump {
   visibility: visible; }
 
+.playlist__track:nth-child(2) .bump {
+  visibility: hidden; }
+
 .dump {
   visibility: hidden; }
 
