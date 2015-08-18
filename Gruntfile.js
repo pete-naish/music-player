@@ -75,13 +75,7 @@ module.exports = function (grunt) {
 
         //watch
         watch: {
-            js: {
-                files: ['assets/js/*.js', 'assets/js/**/*.js'],
-                tasks: ['jshint', 'requirejs'],
-                options: {
-                  spawn: false,
-                }
-            },
+            
             styles: {
                 files: ['assets/css/sass/*.scss', 'assets/css/sass/**/*.scss'],
                 tasks: ['sass']

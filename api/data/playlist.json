@@ -2,192 +2,85 @@
     "main": {
         "tracks": [
             {
-                "title": "Skrillex - Bug Hunt (Wreck-it Ralph) (Noisia Remix)",
-                "duration": 423876,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000033192410-dw4w6j-large.jpg",
-                "id": 65419285,
-                "added_by": 19996905,
-                "votes": [
-                    {
-                        "user": "19996905",
-                        "type": -1
-                    }
-                ],
-                "voteCount": -1
+                "title": "Yung Simmie - Full Metal Freestyle Prod Purpdogg",
+                "duration": 176969,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000074385548-u3v0l1-large.jpg",
+                "id": 141050282,
+                "added_by": 19996905
             }
         ]
     },
     "recent": {
         "tracks": [
             {
-                "title": "Dillon Francis - Drunk All The Time (The Rebirth) [feat. Simon Lord]",
-                "duration": 225221,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000097716855-hnynij-large.jpg",
-                "id": 177755123,
-                "added_by": 166910789,
-                "votes": [
-                    {
-                        "user": "166910789",
-                        "type": -1
-                    }
-                ],
-                "voteCount": 0
+                "title": "Dubmatix Dubstep Drums Compression C 140bpm",
+                "duration": 6922,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000056419299-zy14rt-large.jpg",
+                "id": 107672465,
+                "added_by": 19996905
             },
             {
-                "title": "The Sound Of Silence (Simon & Garfunkel)",
-                "duration": 199253,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000066695100-89jqgb-large.jpg",
-                "id": 127261456,
-                "added_by": 166910789
+                "title": "Dubstep8",
+                "duration": 3526,
+                "artwork_url": null,
+                "id": 125106244,
+                "added_by": 19996905
             },
             {
-                "title": "Pharoahe Monch - Simon Says (Brillz & Etc!Etc! Trap Remix)",
-                "duration": 209077,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000031007989-05f8kb-large.jpg",
-                "id": 58640749,
-                "added_by": 166910789,
-                "votes": [
-                    {
-                        "user": "166910789",
-                        "type": -1
-                    }
-                ],
-                "voteCount": 0
+                "title": "Drum And Bass",
+                "duration": 1853,
+                "artwork_url": null,
+                "id": 102065718,
+                "added_by": 19996905
             },
             {
-                "title": "Miley Cyrus - 50 Ways to Leave Your Lover (Paul Simon Cover)",
-                "duration": 217019,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000106896170-waltl1-large.jpg",
-                "id": 191393777,
-                "added_by": 166910789,
-                "votes": [
-                    {
-                        "user": "166910789",
-                        "type": -1
-                    }
-                ],
-                "voteCount": 0
+                "title": "Drum And Bass 170",
+                "duration": 6451,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000068142591-l62au2-large.jpg",
+                "id": 129934509,
+                "added_by": 19996905
             },
             {
-                "title": "Deadmau5 - Raise Your Weapon (Noisia Remix)",
-                "duration": 194763,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000007527658-smjpzh-large.jpg",
-                "id": 15784497,
-                "added_by": 19996905,
-                "votes": [
-                    {
-                        "user": "19996905",
-                        "type": 0
-                    },
-                    {
-                        "user": "19996905",
-                        "type": 1
-                    }
-                ],
-                "voteCount": 0
+                "title": "Drum and Bass Jungle Drums",
+                "duration": 5720,
+                "artwork_url": null,
+                "id": 64503797,
+                "added_by": 19996905
             },
             {
-                "title": "Noisia - Tommy's Theme",
-                "duration": 280530,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000012001807-shkj9o-large.jpg",
-                "id": 24147530,
-                "added_by": 19996905,
-                "votes": [
-                    {
-                        "user": "19996905",
-                        "type": 0
-                    },
-                    {
-                        "user": "19996905",
-                        "type": -1
-                    }
-                ],
-                "voteCount": 0
+                "title": "DJ4Kat - Hiphop Drum and bass 75 BPM",
+                "duration": 6506,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000003834845-phythh-large.jpg",
+                "id": 8519370,
+                "added_by": 19996905
             },
             {
-                "title": "The Prodigy - Smack My Bitch Up (Noisia Remix) at MistaJam 2012-10-17",
-                "duration": 359582,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000032422330-8n7qyw-large.jpg",
-                "id": 63892903,
-                "added_by": 19996905,
-                "votes": [
-                    {
-                        "user": "19996905",
-                        "type": 1
-                    }
-                ],
-                "voteCount": [
-                    {
-                        "user": "19996905",
-                        "type": 1
-                    }
-                ]
+                "title": "Tom Hiddleston - Hello Baby",
+                "duration": 1515,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000046736848-kxxg6u-large.jpg",
+                "id": 89952897,
+                "added_by": 19996905
             },
             {
-                "title": "Hybrid - Power Curve (Noisia Driveclub Remix)",
-                "duration": 286171,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000093224110-fdew6t-large.jpg",
-                "id": 171055579,
-                "added_by": 19996905,
-                "votes": [
-                    {
-                        "user": "19996905",
-                        "type": 0
-                    },
-                    {
-                        "user": "19996905",
-                        "type": -1
-                    },
-                    {
-                        "user": "19996905",
-                        "type": 0
-                    }
-                ],
-                "voteCount": [
-                    {
-                        "user": "19996905",
-                        "type": 0
-                    },
-                    {
-                        "user": "19996905",
-                        "type": -1
-                    },
-                    {
-                        "user": "19996905",
-                        "type": 0
-                    }
-                ]
+                "title": "HELLO",
+                "duration": 6896,
+                "artwork_url": null,
+                "id": 169104093,
+                "added_by": 19996905
             },
             {
-                "title": "Labrinth ft. Tinie Tempah - Earthquake (Noisia Remix)",
-                "duration": 389371,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000011681052-n1a6w6-large.jpg",
-                "id": 23547065,
-                "added_by": 19996905,
-                "votes": [
-                    {
-                        "user": "19996905",
-                        "type": 0
-                    }
-                ],
-                "voteCount": {
-                    "user": "19996905",
-                    "type": 0
-                }
+                "title": "hello ayu @ayyuuuu01",
+                "duration": 1723,
+                "artwork_url": null,
+                "id": 81018177,
+                "added_by": 19996905
             },
             {
-                "title": "Noisia - Machine Gun (16bit Remix)",
-                "duration": 211358,
-                "artwork_url": "https://i1.sndcdn.com/artworks-000000904695-8p77h4-large.jpg",
-                "id": 1468152,
-                "added_by": 19996905,
-                "votes": [
-                    {
-                        "user": "19996905",
-                        "type": 1
-                    }
-                ],
-                "voteCount": 1
+                "title": "(GOT7) Mark - Hello!",
+                "duration": 1932,
+                "artwork_url": "https://i1.sndcdn.com/artworks-000068216488-8vz6pl-large.jpg",
+                "id": 130069692,
+                "added_by": 19996905
             }
         ]
     }

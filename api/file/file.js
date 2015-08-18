@@ -65,13 +65,13 @@ DB.vote = function(req) {
         trackId = req.params.id,
         dir = ((req.params.dir === "up") ? 1 : -1),
         user = req.headers.user,
-        _track;
+        _track,
+        savePlaylist = true;
 
     _.each(playlist.main.tracks, function(track){
+        var voted;
 
         if (track.id === (trackId * 1)) {
-            var voted;
-
             // Set votes if null
             track.votes = track.votes || [];
             track.voteCount = 0;
@@ -94,9 +94,10 @@ DB.vote = function(req) {
 
             _track = track;
 
-            if (track.vote === 3) {
+            if (track.voteCount === 3) {
                 DB.bumpTrack(_track);
-            } else if (track.vote === -3) {
+            } else if (track.voteCount === -3) {
+                savePlaylist = false;
                 DB.dumpTrack(_track);
             }
         }
@@ -106,19 +107,35 @@ DB.vote = function(req) {
         return false;
     }
 
-    this.writeFile(path.join(__dirname, '../', 'data/playlist.json'), playlist);
+    if (savePlaylist) {
+        this.writeFile(path.join(__dirname, '../', 'data/playlist.json'), playlist);
 
-    this.sendSockets('votes_updated', { data: _track, user: user });
+        this.sendSockets('votes_updated', { data: _track, user: user });
+    }
 
     return _track;    
 }
 
 DB.bumpTrack = function(track) {
-    DB.sendSockets('bump_track', { data: track });
+    this.sendSockets('bump_track', { data: track });
 }
 
 DB.dumpTrack = function(track) {
-    DB.sendSockets('dump_track', { data: track });
+    var playlist = this.getPlaylist(),
+        id = track.id;
+
+    playlist.main.tracks = playlist.main.tracks.filter(function(track) {
+        return (track.id !== id);
+    });
+
+    // write whole playlist
+    this.writeFile(path.join(__dirname, '../', 'data/playlist.json'), playlist);
+
+    // emit event to update client screens
+    this.sendSockets('dump_track', { data: this.getPlaylistWithUser(playlist) });
+
+    // return the whole playlist with user details
+    return this.getPlaylistWithUser(playlist);
 }
 
 DB.getPlaylist = function() {
@@ -172,8 +189,15 @@ DB.removePlaylistItem = function(req, source, destination) {
         if (track.id !== id * 1) {
             return true;
         }
+
         // only add to recent if it's not a duplicate
-        if (!DB.isDuplicate(playlist.recent.tracks, track, "id")) {
+        if (!DB.isDuplicate(playlist[destination].tracks, track, "id")) {
+            // no need to store votes in recent playlist
+            if (track.votes) {
+                track.votes = [];
+                track.voteCount = 0;
+            } 
+
             playlist[destination].tracks.push(track);
         }
         return false;

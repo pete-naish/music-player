@@ -1,0 +1,12 @@
+.playlist__track:first-child {
+    .bump {
+        visibility: hidden;
+    }
+    .dump {
+        visibility: visible;
+    }
+}
+
+.dump {
+    visibility: hidden;
+}

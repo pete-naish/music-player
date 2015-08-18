@@ -109,11 +109,11 @@
             SC.get('/tracks', {
                 q: searchTerm,
                 duration: {
-                    from: 60000,
-                    to: 600000
+                    // from: 60000,
+                    // to: 600000
 
-                    // from: 60,
-                    // to: 10000
+                    from: 1000,
+                    to: 10000
                 }
             }, function(tracks) {
                 renderSearchResults(tracks);
@@ -155,6 +155,16 @@
             // this needs to update client vote count
         });
 
+        socket.on('bump_track', function(data) {
+            console.log('bump track');
+        });
+
+        socket.on('dump_track', function(data) {
+            tracks = data.data.main.tracks;
+
+            skipTrack();
+        });
+
         function addTrack(track) {
             var data = saatchiMusic.utilities.pluck(track, ['title', 'duration', 'artwork_url', 'id', {'added_by': currentUser.id}]);
             syncPlaylist('/playlist', data);
@@ -177,8 +187,11 @@
         }
 
         function skipTrack() {
+            playing = false;
+
             currentTrack.stop();
-            player.playNext();
+            renderPlaylist();
+            player.play(tracks[0]);
         }
 
         function getPlaylist() {
@@ -227,8 +240,6 @@
                     playlistItemVoteDown = document.createElement('a'),
                     playlistItemTimeText = document.createTextNode(saatchiMusic.utilities.timeInMinutes(track.duration));
 
-
-
                 playlistItemVoteUp.innerHTML = 'bump';
                 playlistItemVoteUp.className = 'bump';
 
@@ -247,11 +258,15 @@
                 playlistItem.appendChild(playlistItemVote);
                 playlistItem.appendChild(playlistItemTime);
 
-                playlistItem.addEventListener('click', function(e){
+                playlistItem.className = "playlist__track";
+
+                playlistItem.addEventListener('click', function(e) {
                     if (e.target.className === 'bump') {
                         playlist.vote.call(playlistItemVoteCount, track, 'up');
-                    } else {
+                    } else if (e.target.className === 'dump') {
                         playlist.vote.call(playlistItemVoteCount, track, 'down');
+                    } else {
+                        e.preventDefault();
                     }
                 });
 
@@ -304,7 +319,8 @@
         }
 
         return {
-            play: play
+            play: play,
+            playNext: playNext
         }
     }
 
